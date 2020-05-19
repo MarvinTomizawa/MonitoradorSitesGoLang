@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"strconv"
@@ -73,7 +74,7 @@ func monitoraSite(site string) {
 
 	status := getStatus(site)
 
-	logs.WriteString(time.Now().String() + " Site:" + site + " status: " + strconv.FormatBool(status) + "\n")
+	logs.WriteString(time.Now().Format("02/01/2006 15:04:05") + " Site:" + site + " status: " + strconv.FormatBool(status) + "\n")
 
 	logs.Close()
 }
@@ -92,23 +93,11 @@ func getStatus(site string) bool {
 }
 
 func mostrarLogs() {
-	logs, err := os.Open("projeto/logs.txt")
+	logs, err := ioutil.ReadFile("projeto/logs.txt")
 
 	if err != nil {
 		fmt.Println("Houve um problema para salvar os logs")
 	}
 
-	leitor := bufio.NewReader(logs)
-
-	for {
-		log, _, err2 := leitor.ReadLine()
-
-		if err2 == io.EOF {
-			break
-		}
-
-		fmt.Println(strings.TrimSpace(string(log)))
-	}
-
-	logs.Close()
+	fmt.Println(string(logs))
 }
