@@ -92,3 +92,9 @@ reflect
 
 time 
 - Controle sobre datas e horas
+
+strings
+- Funções utilizadas para string como format, parse, trim
+
+strconv
+- Conversões para string
